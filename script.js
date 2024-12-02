@@ -13,11 +13,11 @@ function initializeGame() {
         square.classList.remove("highlight");
         square.addEventListener("click",() => handleSquareClick(index));
     });
-};
+}
 
 function handleSquareClick(index) {
     game.board[index] = game.currentPlayer;
-    const square = document.getElementById(`square-${ImageBitmapRenderingContext}`);
+    const square = document.getElementById(`square-${index}`);
     square.textContent = game.currentPlayer;
 }
 
