@@ -9,7 +9,7 @@ const game ={
 
 // creates function to start game
 function initializeGame() {
-    updateTurnDisplay();
+    updateTurnDisplay(); //updates the turn tracker
     // attaches click event listeners to all game squares on game board
     document.querySelectorAll(".game-square").forEach((square, index) => { 
         square.textContent = ""; // clears any text from squares
@@ -28,6 +28,12 @@ function handleSquareClick(index) {
     // update the UI to show the current player's mark on the clicked square
     const square = document.getElementById(`square-${index}`);
     square.textContent = game.currentPlayer;
+}
+
+// switches to the next player
+function switchPlayer(){
+    game.currentPlayer = game.currentPlayer == "X" ? "O": "X"; // toggles player
+    updateTurnDisplay(); // updates the turn display
 }
 
 // starts the game
