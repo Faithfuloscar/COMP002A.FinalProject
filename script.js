@@ -24,6 +24,9 @@ function updateTurnDisplay() {
 
 // creates a function to handle clicks on game squares
 function handleSquareClick(index) {
+
+    if (game.board[index] != null) return;
+
     game.board[index] = game.currentPlayer; // update the board state with the current player's mark
     // update the UI to show the current player's mark on the clicked square
     const square = document.getElementById(`square-${index}`);
@@ -45,6 +48,7 @@ function checkWinner() {
         [0,3,6], [1,4,7], [2,5,8] //columns
         [0,4,8], [2,4,6] // diagonals
     ];
+
 }
 // starts the game
 initializeGame();
