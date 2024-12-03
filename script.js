@@ -1,7 +1,7 @@
 
 // Initialize the game state
 const game ={
-    currentPlayer: "x", // starts with player ("X")
+    currentPlayer: "X", // starts with player ("X")
     board: Array(9).fill(null), //Represents the game board as empty
     gameOver: false, //tracks if the game is over
     scores: JSON.parse(localStorage.getItem("ticTacToeScores")) || {X:0, O:0}, // keeps track of the scores in the local storage
@@ -28,6 +28,7 @@ function handleSquareClick(index) {
     // update the UI to show the current player's mark on the clicked square
     const square = document.getElementById(`square-${index}`);
     square.textContent = game.currentPlayer;
+    switchPlayer();
 }
 
 // switches to the next player
@@ -35,6 +36,7 @@ function switchPlayer(){
     game.currentPlayer = game.currentPlayer == "X" ? "O": "X"; // toggles player
     updateTurnDisplay(); // updates the turn display
 }
+
 
 // starts the game
 initializeGame();
