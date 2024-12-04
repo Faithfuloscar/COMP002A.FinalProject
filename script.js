@@ -55,7 +55,7 @@ function updateTurnDisplay() {
 // creates a function to handle clicks on game squares
 function handleSquareClick(index) {
 
-    // if the ga,e is over or the square is occupied, nothing will happen
+    // if the game is over or the square is occupied, nothing will happen
     if (game.gameOver || game.board[index] != null) return;
 
     game.board[index] = game.currentPlayer; // update the board state with the current player's mark
