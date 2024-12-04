@@ -18,9 +18,8 @@ function setupBoard () {
         document.querySelectorAll(".game-square").forEach((square, index) => { 
             square.textContent = ""; // clears any text from squares
             square.classList.remove("highlight"); // removes any previous highlight styling
-            const newSquare = square.cloneNode(true);
-            square.parentNode.replaceChild(newSquare, square);
-            newSquare.addEventListener("click",() => handleSquareClick(index)); //adds a click event listener to handle moves on this square
+            square.removeEventListener("click",handleSquareClick);
+            square.addEventListener("click",() => handleSquareClick(index)); //adds a click event listener to handle moves on this square
         });
         game.board.fill(null);
         game.gameOver = false;
@@ -64,8 +63,8 @@ function switchPlayer(){
 function checkWinner() {
     const winningCombs = [
         [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
-        [0, 3, 6], [1 ,4, 7], [2, 5, 8], //columns
-        [0, 4, 8], [2, 4, 6] // diagonals
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], //columns
+        [0, 4, 8], [2, 4, 6], // diagonals
     ];
 
     for (const combo of winningCombs) {
@@ -90,5 +89,6 @@ function endGame(winner) {
         alert(`${winner} wins!`);
     }
 }
+
 // starts the game
 initializeGame();
