@@ -4,12 +4,13 @@ const game ={
     currentPlayer: "X", // starts with player ("X")
     board: Array(9).fill(null), //Represents the game board as empty
     gameOver: false, //tracks if the game is over
-    scores: {X:0, O:0}, // keeps track of the scores in the local storage
+    scores: JSON.parse(localStorage.getItem("ticTacToeScores")) || {X:0, O:0}, // keeps track of the scores in the local storage
 };
 
 // creates function to start game
 function initializeGame() {
     updateTurnDisplay(); //updates the turn tracker
+    updateScoreboard();
     setupBoard();
 }
 
@@ -87,7 +88,15 @@ function endGame(winner) {
     }
     else {
         alert(`${winner} wins!`);
+        game.scores[winner]++;
+        localStorage.setItem("ticTacToeScores", JSON.stringify(game.scores));
+        updateScoreboard();
     }
+}
+
+function updateScoreboard() {
+    document.getElementById("scoreboard-x").textContent = game.scores.X;
+    document.getElementById("scoreboard-o").textContent = game.scores.O;
 }
 
 // starts the game
