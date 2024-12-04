@@ -31,8 +31,17 @@ function handleSquareClick(index) {
     // update the UI to show the current player's mark on the clicked square
     const square = document.getElementById(`square-${index}`);
     square.textContent = game.currentPlayer;
-    switchPlayer();
-    checkWinner();
+    
+    const winner = checkWinner();
+    if (winner) {
+        endGame(winner);
+    }
+    else if (game.board.every((cell) => cell != null)) {
+        endGame("Tie");
+    }
+    else {
+        switchPlayer();
+    }
 }
 
 // switches to the next player
@@ -49,6 +58,17 @@ function checkWinner() {
         [0,4,8], [2,4,6] // diagonals
     ];
 
+    for (const combo of winningCombs) {
+        const [a, b, c] = combo;
+        if (
+            game.board[a] &&
+            game.board[a] == game.board [b] &&
+            game.board[a] == game.board[c]
+        ){
+        return game.board[a]; // returns the winner
+        }
+    }
+    return null;
 }
 // starts the game
 initializeGame();
