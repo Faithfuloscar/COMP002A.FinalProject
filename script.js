@@ -1,17 +1,30 @@
 
+
 // Initialize the game state
 const game ={
     currentPlayer: "X", // starts with player ("X")
     board: Array(9).fill(null), //Represents the game board as empty
     gameOver: false, //tracks if the game is over
-    scores: JSON.parse(localStorage.getItem("ticTacToeScores")) || {X:0, O:0}, // keeps track of the scores in the local storage
+    scores: initializeScores(), // loads the scores from session storage
 };
+
+function initializeScores() {
+    try {
+        return JSON.parse(sessionStorage.getItem("ticTacToeScores")) || {X: 0 , O: 0};
+    } catch (error) {
+        console.warn("session storage not available", error);
+        return {X : 0, O: 0};
+    }
+    
+}
 
 // creates function to start game
 function initializeGame() {
     updateTurnDisplay(); //updates the turn tracker
     updateScoreboard();
     setupBoard();
+    document.getElementById("button-play-again")
+    .addEventListener("click", resetGame);
 }
 
 function setupBoard () {
@@ -89,14 +102,27 @@ function endGame(winner) {
     else {
         alert(`${winner} wins!`);
         game.scores[winner]++;
-        localStorage.setItem("ticTacToeScores", JSON.stringify(game.scores));
+        saveScoresToSessionStorage();
         updateScoreboard();
+    }
+}
+
+function saveScoresToSessionStorage() {
+    try {
+        sessionStorage.setItem("ticTacToeScores", JSON.stringify(game.scores));
+    }
+    catch(error) {
+        console.warn ("can't save to session storage", error);
     }
 }
 
 function updateScoreboard() {
     document.getElementById("scoreboard-x").textContent = game.scores.X;
     document.getElementById("scoreboard-o").textContent = game.scores.O;
+}
+
+function resetGame() {
+    setupBoard();
 }
 
 // starts the game
